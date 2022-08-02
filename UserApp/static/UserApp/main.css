@@ -9,3 +9,17 @@
     font-size: 14px;
 }
 
+.quantity{
+    display:flex;
+    align-items:flex-stretch;
+    padding:7px;
+}
+
+.change-quantity{
+    display: inline-block; 
+    padding-right:10px;
+}
+
+.img-mini{
+    width: 100px;
+}
