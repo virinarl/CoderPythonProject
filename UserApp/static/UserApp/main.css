@@ -9,11 +9,13 @@
     font-size: 14px;
 }
 
+/*Por alguna razón, cuando le cambio el nombre a la clase quantity, el template no la toma*/
 .quantity{
     display:flex;
     align-items:flex-stretch;
     padding:7px;
 }
+
 
 .change-quantity{
     display: inline-block; 
