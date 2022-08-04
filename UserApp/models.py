@@ -15,7 +15,15 @@ class Product(models.Model):
     name = models.CharField(max_length=200)
     price = models.FloatField()
     digital = models.BooleanField(default=False)
-    #image
+    product_Img=models.ImageField(upload_to='productsImg', null=True)
+    
+    @property
+    def imageURL(self):
+        try:
+            url = self.product_Img.url
+        except:
+            url = ''
+        return url
     
     def __str__(self):
         return f'{self.name} - {self.price}'
