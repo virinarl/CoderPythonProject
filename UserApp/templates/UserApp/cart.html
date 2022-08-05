@@ -11,8 +11,8 @@
                 <a class="btn btn-outline-dark col-lg-2" href="{% url 'store' %}" style="margin:5px;"> &#x2190; Continue Shopping</a>
                 <table style="margin:5px;">
                     <tr>
-                        <th><h5>Items: <strong>3</strong></h5></th>
-                        <th><h5>Total: <strong>$42</strong></h5></th>
+                        <th><h5>Items: <strong>{{order.cart_items}}</strong></h5></th>
+                        <th><h5>Total: <strong>${{order.cart_total|floatformat:2}}</strong></h5></th>
                         <th>
                             <a href="{% url 'checkout' %}" class="btn btn-success" style="float:right;">Checkout</a>
                         </th>
@@ -28,14 +28,16 @@
                     <div style="flex:1;"><strong>Quantity</strong></div>
                     <div style="flex:1;"><strong>Total</strong></div>
                 </div>
+
+                {% for item in items %}
                 <div class="quantity">
                     <div style="flex:2;">
-                        <img src="{% static 'UserApp/assets/placeholderImg.png'%}" alt="placeholder Img" class="img-mini">
+                        <img src="{{item.product.imageURL}}" alt="placeholder Img" class="img-mini">
                     </div>
-                    <div style="flex:2;">Product 1</div>
-                    <div style="flex:1;">$20</div>
+                    <div style="flex:2;">{{item.product.name}}</div>
+                    <div style="flex:1;">${{item.product.price|floatformat:2}}</div>
                     <div style="flex:1;">
-                        <p class="change-quantity">2</p>
+                        <p class="change-quantity">{{item.quantity}}</p>
                         <div class="change-quantity">
                             <svg style="cursor:pointer;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up-short" viewBox="0 0 16 16">
                                 <path fill-rule="evenodd" d="M8 12a.5.5 0 0 0 .5-.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 .5.5z"/>
@@ -45,9 +47,9 @@
                             </svg>
                         </div>
                     </div>
-                    <div style="flex:1;">$40</div>
+                    <div style="flex:1;">${{item.item_total|floatformat:2}}</div>
                 </div>
-                
+                {% endfor %}
             </div>
         </div>
     </div>

@@ -18,7 +18,7 @@
                 <h5 class="card-title">{{product.name}}</h5>
                 <a href="#" class="btn btn-outline-secondary">Add to Cart</a>
                 <a href="#" class="btn btn-outline-success">View</a>
-                <h4 style="display:inline-block;float:right;">{{product.price}}</h4>
+                <h4 style="display:inline-block;float:right;">{{product.price|floatformat:2}}</h4>
             </div>
         </div>
         {% endfor %}
