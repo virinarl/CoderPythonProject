@@ -16,6 +16,27 @@
 
     <!-- Own css -->
     <link rel="stylesheet" href="{% static 'UserApp/main.css' %}">
+    <script>
+      //verify who is the user
+      let user = '{{request.user}}'
+      //From https://docs.djangoproject.com/en/3.2/ref/csrf/
+      function getToken(name) {
+      let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+      }
+      const csrftoken = getToken('csrftoken');
+    </script>
     <title>Python Project - Coderhouse</title>
   </head>
   <body>
@@ -40,7 +61,7 @@
                   <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
                 </svg>
               </a>
-              <p id="cart-total">0</p>
+              <p id="cart-total">{{cartItems}}</p>
             </div>  
           </div>
         </div>
@@ -70,5 +91,7 @@
       integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
       crossorigin="anonymous"
     ></script>
+
+    <script src="{% static 'UserApp/cart.js' %}"></script>
   </body>
 </html>

@@ -1,38 +1,40 @@
-{% extends "UserApp/base.html" %}
-{% load static%}
-<link rel="stylesheet" href="{% static 'UserApp/main.css' %}">
+{% extends "UserApp/base.html" %} {% load static%}
+<link rel="stylesheet" href="{% static 'UserApp/main.css' %}" />
 
 {% block main %}
 <div class="container">
-    <h1>Checkout</h1>
-    <div class="row">
-        <div class="col-lg-6">
-            <div class="card" id="form-wrapper">
-            </div>
-        </div>
-        <div class="col-lg-6">
-            <div class="card" style="padding:7px;">
-                <a class="btn btn-outline-dark col-lg-3" href="{% url 'cart' %}"> &#x2190; Back to Cart</a>
-                <hr>
-                <h3>Order Summary</h3>
-                <hr>
-                {% for item in items %}
-                <div class="quantity">
-                    <div style="flex:2">
-                        <img class="img-mini" src="{{item.product.imageURL}}" alt="">
-                    </div>
-                    <div style="flex:2">{{item.product.name}}</div>
-                    <div style="flex:1">${{item.product.price|floatformat:2}}</div>
-                    <div style="flex:1">x{{item.quantity}}</div>
-                </div>
-                {% endfor %}
-                <hr>
-                <h5>Items: {{order.cart_items}}</h5>
-                <h5>Total: ${{order.cart_total|floatformat:2}}</h5>
-            </div>
-        </div>
+  <h1>Checkout</h1>
+  <div class="row">
+    <div class="col-lg-6">
+      <div class="card" id="form-wrapper">
+        
+      </div>
     </div>
-</div>
 
+    <div class="col-lg-6">
+      <div class="card" style="padding: 7px">
+        <a class="btn btn-outline-dark col-lg-3" href="{% url 'cart' %}">
+          &#x2190; Back to Cart</a
+        >
+        <hr />
+        <h3>Order Summary</h3>
+        <hr />
+        {% for item in items %}
+        <div class="quantity">
+          <div style="flex: 2">
+            <img class="img-mini" src="{{item.product.imageURL}}" alt="" />
+          </div>
+          <div style="flex: 2">{{item.product.name}}</div>
+          <div style="flex: 1">${{item.product.price|floatformat:2}}</div>
+          <div style="flex: 1">x{{item.quantity}}</div>
+        </div>
+        {% endfor %}
+        <hr />
+        <h5>Items: {{order.cart_items}}</h5>
+        <h5>Total: ${{order.cart_total|floatformat:2}}</h5>
+      </div>
+    </div>
+  </div>
+</div>
 
 {% endblock %}
