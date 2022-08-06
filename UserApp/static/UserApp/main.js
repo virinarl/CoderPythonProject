@@ -32,3 +32,17 @@ function updateUserOrder(productId, action) {
           location.reload()
       });
 }
+
+let anonymousUser = document.getElementsByClassName('anonymous-user');
+let registerUser = document.getElementsByClassName('register-user');
+
+
+if (user === "AnonymousUser") {
+  for (let i = 0; i < registerUser.length; i++){
+    registerUser[i].setAttribute('style','display:none')
+  }
+} else {
+  for (let i = 0; i < anonymousUser.length; i++) {
+    anonymousUser[i].setAttribute("style", "display:none");
+  }
+}

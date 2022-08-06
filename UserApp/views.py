@@ -9,12 +9,15 @@ def store(request):
         customer = request.user.customer
         order, created = Order.objects.get_or_create(customer = customer, complete= False)
         cartItems = order.cart_items
+        userName = customer.name
+        
     else:
         order = {'cart_items':0}
-        cartItems = order.cart_items
+        cartItems = order['cart_items']
+        userName = ''
     
     products = Product.objects.all()
-    context={'products':products, 'cartItems': cartItems}
+    context={'products':products, 'cartItems': cartItems, 'userName' :userName}
     return render(request, 'UserApp/index.html',context)
 
 def cart(request):
@@ -23,12 +26,14 @@ def cart(request):
         order, created = Order.objects.get_or_create(customer = customer, complete= False)
         items = order.orderitem_set.all()
         cartItems = order.cart_items
+        userName = customer.name
     else:
         items = []
         order = {'cart_total':0, 'cart_items':0}
-        cartItems = order.cart_items
+        cartItems = order['cart_items']
+        userName = ''
     
-    context = {'items':items, 'order':order,'cartItems': cartItems}
+    context = {'items':items, 'order':order,'cartItems': cartItems, 'userName' :userName}
     return render(request, 'UserApp/cart.html',context)
 
 def checkout(request):
@@ -37,12 +42,14 @@ def checkout(request):
         order, created = Order.objects.get_or_create(customer = customer, complete= False)
         items = order.orderitem_set.all()
         cartItems = order.cart_items
+        userName = customer.name
     else:
         items = []
         order = {'cart_total':0, 'cart_items':0}
-        cartItems = order.cart_items
+        cartItems = order['cart_items']
+        userName = ''
     
-    context = {'items':items, 'order':order, 'cartItems': cartItems}
+    context = {'items':items, 'order':order, 'cartItems': cartItems, 'userName' :userName}
     
     return render(request, 'UserApp/checkout.html',context)
 
