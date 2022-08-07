@@ -1,51 +1,43 @@
-from ast import Or
 from django.shortcuts import render
 from django.http import JsonResponse
+from django.views.generic import ListView, View
 import json
 from .models import *
 # Create your views here.
-def store(request):
-    if request.user.is_authenticated:
-        customer = request.user.customer
-        order, created = Order.objects.get_or_create(customer = customer, complete= False)
-        cartItems = order.cart_items
-        
-    else:
-        order = {'cart_items':0}
-        cartItems = order['cart_items']
+class BaseView(View):
+       
+    def get_context_data(self, **kwargs):
+        if self.request.user.is_authenticated:
+            customer = self.request.user.customer
+            order, created = Order.objects.get_or_create(customer = customer, complete= False)
+            items = order.orderitem_set.all()
+            cartItems = order.cart_items
+        else:
+            items = []
+            order = {'cart_total':0, 'cart_items':0}
+            cartItems = order['cart_items']
+        context = super().get_context_data(**kwargs)
+        context['order'] = order
+        context['items'] = items
+        context['cartItems'] = cartItems
+        return context
     
-    products = Product.objects.all()
-    context={'products':products, 'cartItems': cartItems}
-    return render(request, 'UserApp/index.html',context)
+class StoreView(BaseView, ListView):  
+    queryset = Product.objects.all()
+    context_object_name = 'products'
+    template_name = 'UserApp/index.html'
 
-def cart(request):
-    if request.user.is_authenticated:
-        customer = request.user.customer
-        order, created = Order.objects.get_or_create(customer = customer, complete= False)
-        items = order.orderitem_set.all()
-        cartItems = order.cart_items
-    else:
-        items = []
-        order = {'cart_total':0, 'cart_items':0}
-        cartItems = order['cart_items']
-    
-    context = {'items':items, 'order':order,'cartItems': cartItems}
-    return render(request, 'UserApp/cart.html',context)
+class CartView(BaseView, ListView):
+    queryset = OrderItem.objects.all()
+    context_object_name = 'items'    
+    template_name = 'UserApp/cart.html'
 
-def checkout(request):
-    if request.user.is_authenticated:
-        customer = request.user.customer
-        order, created = Order.objects.get_or_create(customer = customer, complete= False)
-        items = order.orderitem_set.all()
-        cartItems = order.cart_items
-    else:
-        items = []
-        order = {'cart_total':0, 'cart_items':0}
-        cartItems = order['cart_items']
-    
-    context = {'items':items, 'order':order, 'cartItems': cartItems}
-    
-    return render(request, 'UserApp/checkout.html',context)
+
+class CheckoutListItemView(BaseView, ListView):
+    queryset = OrderItem.objects.all()
+    context_object_name = 'items'    
+    template_name = 'UserApp/checkout.html'
+
 
 def updateItem(request):
     data = json.loads(request.body)
