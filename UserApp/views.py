@@ -1,10 +1,14 @@
 from django.shortcuts import render
 from django.http import JsonResponse
-from django.views.generic import ListView, View, DetailView, TemplateView
+from django.views.generic import ListView, View, DetailView, TemplateView, CreateView
+from django.contrib.messages.views import SuccessMessageMixin
 from django.views.generic.edit import DeleteView
 from django.urls import reverse_lazy
-import json
+from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth.forms import UserCreationForm
 from .models import *
+import json
+
 # Create your views here.
 class BaseView(View):
        
@@ -34,12 +38,10 @@ class CartView(BaseView, ListView):
     context_object_name = 'items'    
     template_name = 'UserApp/cart.html'
 
-
 class CheckoutListItemView(BaseView, ListView):
     model = OrderItem
     context_object_name = 'items'    
     template_name = 'UserApp/checkout.html'
-
 
 class ProductDetailView(BaseView, DetailView):
     model = Product
@@ -73,5 +75,17 @@ class DeleteCartItem(BaseView, DeleteView):
     success_url = reverse_lazy('cart')
     
 class AboutView(BaseView, TemplateView):
-
     template_name = "UserApp/about_us.html"
+    
+class UserLoginView(LoginView):
+    template_name = 'UserApp/user_login.html'
+    next_page = reverse_lazy('store')
+    
+class UserLogoutView(LogoutView):
+    template_name = 'UserApp/user_logout.html'
+    
+class UserSignUpView(SuccessMessageMixin, CreateView):
+  template_name = 'UserApp/create_account.html'
+  success_url = reverse_lazy('store')
+  form_class = UserCreationForm
+  success_message = "¡¡ Se creo tu perfil satisfactoriamente !!"

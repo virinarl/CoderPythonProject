@@ -1,0 +1,10 @@
+{% extends "UserApp/base.html" %} {% load static %} 
+{% load static%}
+<link rel="stylesheet" href="{% static 'UserApp/main.css' %}">
+{% block main %}
+
+<div class="container">
+    <h1>User succesfuly logged out</h1>
+    <a class="btn btn-outline-dark col-lg-2" href="{% url 'store' %}">&#x2190;Back to home page</a>
+</div>
+{%endblock%}
