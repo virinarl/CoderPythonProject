@@ -1,60 +1,111 @@
-{% extends "UserApp/base.html" %}
-{% load static%}
-<link rel="stylesheet" href="{% static 'UserApp/main.css' %}">
+{% extends "UserApp/base.html" %} {% load static%}
+<link rel="stylesheet" href="{% static 'UserApp/main.css' %}" />
 {% block main %}
 
 <div class="container">
-    <h1>Cart</h1>
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="card">
-                <a class="btn btn-outline-dark col-lg-2" href="{% url 'store' %}" style="margin:5px;"> &#x2190; Continue Shopping</a>
-                <table style="margin:5px;">
-                    <tr>
-                        <th><h5>Items: <strong>{{order.cart_items}}</strong></h5></th>
-                        <th><h5>Total: <strong>${{order.cart_total|floatformat:2}}</strong></h5></th>
-                        <th>
-                            <a href="{% url 'checkout' %}" class="btn btn-success" style="float:right;">Checkout</a>
-                        </th>
-                    </tr>
-                </table>
-            </div>
-            <br>
-            <div class="card">
-                <div class="quantity">
-                    <div style="flex:2;"></div>
-                    <div style="flex:2;"><strong>Item</strong></div>
-                    <div style="flex:1;"><strong>Price</strong></div>
-                    <div style="flex:1;"><strong>Quantity</strong></div>
-                    <div style="flex:1;"><strong>Total</strong></div>
-                </div>
-
-                {% for item in items %}
-                <div class="quantity">
-                    <div style="flex:2;">
-                        <img src="{{item.product.imageURL}}" alt="placeholder Img" class="img-mini">
-                    </div>
-                    <div style="flex:2;">{{item.product.name}}</div>
-                    <div style="flex:1;">${{item.product.price|floatformat:2}}</div>
-                    <div style="flex:1;">
-                        <p class="change-quantity">{{item.quantity}}</p>
-                        <div class="change-quantity">
-                            <svg class="update-cart" data-product="{{item.product.id}}" data-action="add" style="cursor:pointer;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up-short" viewBox="0 0 16 16">
-                                <path fill-rule="evenodd" d="M8 12a.5.5 0 0 0 .5-.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 .5.5z"/>
-                            </svg>
-                            <svg class="update-cart" data-product="{{item.product.id}}" data-action="remove" style="cursor:pointer;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-short" viewBox="0 0 16 16">
-                                <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z"/>
-                            </svg>
-                        </div>
-                    </div>
-                    <div style="flex:1;">${{item.item_total|floatformat:2}}</div>
-                </div>
-                {% endfor %}
-            </div>
+  <h1>Cart</h1>
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <a
+          class="btn btn-outline-dark col-lg-2"
+          href="{% url 'store' %}"
+          style="margin: 5px"
+        >
+          &#x2190; Continue Shopping</a
+        >
+        <table style="margin: 5px">
+          <tr>
+            <th>
+              <h5>Items: <strong>{{order.cart_items}}</strong></h5>
+            </th>
+            <th>
+              <h5>Total: <strong>${{order.cart_total}}</strong></h5>
+            </th>
+            <th>
+              <a
+                href="{% url 'checkout' %}"
+                class="btn btn-success"
+                style="float: right"
+                >Checkout</a
+              >
+            </th>
+          </tr>
+        </table>
+      </div>
+      <br />
+      <div class="card">
+        <div class="quantity">
+          <div style="flex: 2"></div>
+          <div style="flex: 2"><strong>Item</strong></div>
+          <div style="flex: 1"><strong>Price</strong></div>
+          <div style="flex: 1"><strong>Quantity</strong></div>
+          <div style="flex: 1"><strong>Total</strong></div>
+          <div style="flex: 1"></div>
         </div>
+
+        {% for item in items %}
+        <div class="quantity">
+          <div style="flex: 2">
+            <img
+              src="{{item.product.imageURL}}"
+              alt="placeholder Img"
+              class="img-mini"
+            />
+          </div>
+          <div style="flex: 2">{{item.product.name}}</div>
+          <div style="flex: 1">${{item.product.price}}</div>
+          <div style="flex: 1">
+            <p class="change-quantity">{{item.quantity}}</p>
+            <div class="change-quantity">
+              <svg
+                class="update-cart"
+                data-product="{{item.product.id}}"
+                data-action="add"
+                style="cursor: pointer"
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                class="bi bi-arrow-up-short"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M8 12a.5.5 0 0 0 .5-.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 .5.5z"
+                />
+              </svg>
+              <svg
+                class="update-cart"
+                data-product="{{item.product.id}}"
+                data-action="remove"
+                style="cursor: pointer"
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                class="bi bi-arrow-down-short"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z"
+                />
+              </svg>
+            </div>
+          </div>
+          <div style="flex: 1">${{item.item_total}}</div>
+          <div style="flex: 1">
+            <form method="POST" action="{% url 'deleteItem' item.id %}">
+                {% csrf_token %}
+                <input type="submit" value="Delete Item">
+            </form>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
     </div>
+  </div>
 </div>
-
-
 
 {% endblock %}

@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.http import JsonResponse
-from django.views.generic import ListView, View
+from django.views.generic import ListView, View, DetailView, TemplateView
+from django.views.generic.edit import DeleteView
+from django.urls import reverse_lazy
 import json
 from .models import *
 # Create your views here.
@@ -28,16 +30,20 @@ class StoreView(BaseView, ListView):
     template_name = 'UserApp/index.html'
 
 class CartView(BaseView, ListView):
-    queryset = OrderItem.objects.all()
+    model = OrderItem
     context_object_name = 'items'    
     template_name = 'UserApp/cart.html'
 
 
 class CheckoutListItemView(BaseView, ListView):
-    queryset = OrderItem.objects.all()
+    model = OrderItem
     context_object_name = 'items'    
     template_name = 'UserApp/checkout.html'
 
+
+class ProductDetailView(BaseView, DetailView):
+    model = Product
+    context_object_name = 'product'
 
 def updateItem(request):
     data = json.loads(request.body)
@@ -61,3 +67,11 @@ def updateItem(request):
         orderItem.delete()
     
     return JsonResponse('Item was addeded', safe=False)
+
+class DeleteCartItem(BaseView, DeleteView):
+    model = OrderItem
+    success_url = reverse_lazy('cart')
+    
+class AboutView(BaseView, TemplateView):
+
+    template_name = "UserApp/about_us.html"

@@ -17,8 +17,8 @@
             <div class="card-body">
                 <h5 class="card-title">{{product.name}}</h5>
                 <button data-product={{product.id}} data-action="add" class="btn btn-outline-secondary update-cart">Add to Cart</button>
-                <a href="#" class="btn btn-outline-success">View</a>
-                <h4 style="display:inline-block;float:right;">{{product.price|floatformat:2}}</h4>
+                <a href="{% url 'productDetail' product.id %}" class="btn btn-outline-success">View</a>
+                <h4 style="display:inline-block;float:right;">{{product.price}}</h4>
             </div>
         </div>
         {% endfor %}
