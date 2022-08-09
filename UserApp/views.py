@@ -2,9 +2,9 @@ from django.shortcuts import render
 from django.http import JsonResponse
 from django.views.generic import ListView, View, DetailView, TemplateView, CreateView
 from django.contrib.messages.views import SuccessMessageMixin
-from django.views.generic.edit import DeleteView
+from django.views.generic.edit import DeleteView, UpdateView
 from django.urls import reverse_lazy
-from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth.views import LogoutView, LoginView
 from django.contrib.auth.forms import UserCreationForm
 from .models import *
 import json
@@ -14,15 +14,17 @@ class BaseView(View):
        
     def get_context_data(self, **kwargs):
         if self.request.user.is_authenticated:
-            customer = self.request.user.customer
+            customer, created = Customer.objects.get_or_create(user = self.request.user, name = self.request.user) 
             order, created = Order.objects.get_or_create(customer = customer, complete= False)
             items = order.orderitem_set.all()
             cartItems = order.cart_items
         else:
+            customer={}
             items = []
             order = {'cart_total':0, 'cart_items':0}
             cartItems = order['cart_items']
         context = super().get_context_data(**kwargs)
+        context['customer'] = customer
         context['order'] = order
         context['items'] = items
         context['cartItems'] = cartItems
@@ -38,10 +40,10 @@ class CartView(BaseView, ListView):
     context_object_name = 'items'    
     template_name = 'UserApp/cart.html'
 
-class CheckoutListItemView(BaseView, ListView):
+class OrderSummaryView(BaseView, ListView):
     model = OrderItem
     context_object_name = 'items'    
-    template_name = 'UserApp/checkout.html'
+    template_name = 'UserApp/order_summary.html'
 
 class ProductDetailView(BaseView, DetailView):
     model = Product
@@ -77,15 +79,30 @@ class DeleteCartItem(BaseView, DeleteView):
 class AboutView(BaseView, TemplateView):
     template_name = "UserApp/about_us.html"
     
-class UserLoginView(LoginView):
+class UserLoginView(BaseView, LoginView):
     template_name = 'UserApp/user_login.html'
     next_page = reverse_lazy('store')
-    
-class UserLogoutView(LogoutView):
+
+
+class UserLogoutView(BaseView, LogoutView):
     template_name = 'UserApp/user_logout.html'
     
-class UserSignUpView(SuccessMessageMixin, CreateView):
-  template_name = 'UserApp/create_account.html'
-  success_url = reverse_lazy('store')
-  form_class = UserCreationForm
-  success_message = "¡¡ Se creo tu perfil satisfactoriamente !!"
+class UserSignUpView(SuccessMessageMixin, BaseView,CreateView):
+    template_name = 'UserApp/create_account.html'
+    success_url = reverse_lazy('login')
+    form_class = UserCreationForm
+    success_message = "¡¡ Se creo tu perfil satisfactoriamente !!"
+  
+class UserUpdateView(BaseView , UpdateView):
+    model = Customer
+    fields = ['name', 'email']
+    template_name_suffix = '_update'
+    success_url = reverse_lazy('store')
+
+class CheckoutFormView(BaseView, CreateView):
+    model = ShippingInfo
+    fields = ['address', 'city', 'state', 'zipcode']
+    template_name = "UserApp/shipping_info.html"
+    success_url = reverse_lazy('store')
+
+    

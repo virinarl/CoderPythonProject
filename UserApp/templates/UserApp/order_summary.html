@@ -3,15 +3,8 @@
 
 {% block main %}
 <div class="container">
-  <h1>Checkout</h1>
-  <div class="row">
-    <div class="col-lg-6">
-      <div class="card" id="form-wrapper">
-        
-      </div>
-    </div>
-
-    <div class="col-lg-6">
+  <h1>Order Summary</h1>
+    <div class="col-lg-12">
       <div class="card" style="padding: 7px">
         <a class="btn btn-outline-dark col-lg-3" href="{% url 'cart' %}">
           &#x2190; Back to Cart</a
@@ -34,6 +27,7 @@
         <h5>Total: ${{order.cart_total}}</h5>
       </div>
     </div>
+    <a href="{%url 'shippingInfo' %}" class="btn btn-outline-success" style="margin-top: 2%;">Continue to Shipping Information</a> 
   </div>
 </div>
 

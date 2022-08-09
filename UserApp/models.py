@@ -10,7 +10,7 @@ class Customer(models.Model):
     date_updated = models.DateTimeField(auto_now=True)
     
     def __str__(self):
-        return f'{self.user} - {self.email}'
+        return f'{str(self.id)} - {self.user} - {self.email}'
     
 class Product(models.Model):
     #one product
