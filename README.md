@@ -8,6 +8,10 @@ Things you can do:
 - View Cart summary and set shipping information
 
 In the future I'll be working on an administrator app to create, update and delete new products from site instead od Django Administrator. Also I'll be working on some fixed in checkout section.
+
+On the following video you can see all the steps you need to follow to make this app run. 
+https://drive.google.com/file/d/1sonK3Xh4ghtXQO55zp_bxHlDZdm1rhAf/view?usp=sharing
+
 # Install 
 
 For installing this software you need to do:
