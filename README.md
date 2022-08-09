@@ -88,5 +88,7 @@ Go to http://127.0.0.1:8000/
 
 to have access to the app.
 
-If everthing goes well you should be able to open the browser and see the application run
+If everthing goes well you should be able to open the browser and see the application run. 
+
+> **_NOTE:_**  In case you don't want to use your onw product images, you can find some demo images into media/productsImg.
 
