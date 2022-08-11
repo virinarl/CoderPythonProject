@@ -12,6 +12,8 @@ In the future I'll be working on an administrator app to create, update and dele
 On the following video you can see all the steps you need to follow to make this app run. 
 https://drive.google.com/file/d/1sonK3Xh4ghtXQO55zp_bxHlDZdm1rhAf/view?usp=sharing
 
+Test Cases: https://docs.google.com/spreadsheets/d/12JxtzSdLeZhdGyZeD2W-hEfHNt1oSXkxFyBXQC0pTtk/edit?usp=sharing
+
 # Install 
 
 For installing this software you need to do:
